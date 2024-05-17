@@ -1,6 +1,8 @@
 import React from "react";
 import { Layout, theme } from "antd";
 import Navbar from "../components/sidebar";
+import DashboardUpperCards from "../components/cards/DashboardUpperCards";
+import DashboardLowerCards from "../components/cards/DashboardLowerCards";
 const { Content } = Layout;
 
 const Dashboard = () => {
@@ -23,9 +25,13 @@ const Dashboard = () => {
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
             height: "100%",
+            display: 'flex',
+            gap: 20,
+            flexDirection: 'column'
           }}
         >
-          Dashboard
+          <DashboardUpperCards />
+          <DashboardLowerCards />
         </div>
       </Content>
     </Layout>
