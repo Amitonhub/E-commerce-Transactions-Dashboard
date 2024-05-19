@@ -1,0 +1,38 @@
+/* auth.module.css */
+.formContainer {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    height: 88vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  .button {
+    width: 100%;
+    margin-top: 10px;
+    background-color: #8251FE;
+  }
+
+  .heading {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .demoInfo {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .demoInfo p {
+    font-weight: bold;
+  }
+  
+  .demoInfo p:first-child {
+    margin-bottom: 10px;
+  }

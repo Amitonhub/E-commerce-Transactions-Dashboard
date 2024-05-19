@@ -18,3 +18,8 @@
   .menuItem span {
     margin-left: 8px;
   }
+
+  .auth {
+    font-size: xx-large;
+    font-weight: 900;
+  }

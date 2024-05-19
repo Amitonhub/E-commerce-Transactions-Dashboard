@@ -1,25 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, Layout, Menu } from 'antd';
-import { useLocation } from 'react-router-dom'; 
+import { Link, useLocation } from 'react-router-dom'; 
 import styles from './sidebar.module.css';
 import Logo from '../../assets/logo.png'
+import { useSelector } from 'react-redux';
 const { Header } = Layout;
 
 const items = [
-  { key: 1, label: 'Dashboard' },
-  { key: 2, label: 'Products' },
-  { key: 3, label: 'Customers' },
-  { key: 4, label: 'Analytics' },
-  { key: 5, label: 'Reports' },
-  { key: 6, label: 'Settings' },
-  { key: 7, label: 'Help/Support' },
-  { key: 8, label: 'Logout' }
+  { key: 1, label: 'Dashboard', route: '/dashboard' },
+  { key: 2, label: 'Products', route: '/products' },
+  { key: 3, label: 'Customers', route: '/customers' },
+  { key: 8, label: 'Logout', route: '/logout' }
 ];
 
 function Navbar() {
+  const [isLogin, setIsLogin] = useState(false)
   const location = useLocation(); 
-
   const currentPath = location.pathname.toLowerCase();
+  const isLoginState = useSelector((state) => state.login.isLogin);
+
+  useEffect(() => {
+    if(isLoginState){
+      setIsLogin(isLoginState)
+    }
+  },[isLoginState])
 
   const selectedKey = items.find(item => currentPath.includes(item.label.toLowerCase()))?.key.toString();
 
@@ -40,18 +44,25 @@ function Navbar() {
     >
       <Image height={50} width={50} src={Logo} alt='logo' style={{ display: 'flex', marginLeft: '20px'}}/>
       <div className="demo-logo" />
+      
       <Menu
         theme="light"
         mode="horizontal"
         defaultSelectedKeys={[selectedKey]} 
-        items={items}
         style={{
           flex: 1,
           minWidth: 0,
           borderRadius: '20px',
           justifyContent: 'center'
         }}
-      />
+      >
+        {isLogin ? 
+        items.map(item => (
+          <Menu.Item key={item.key}>
+            <Link to={item.route}>{item.label}</Link>
+          </Menu.Item>
+        )) : <span className={styles.auth}>Auth</span>}
+      </Menu> 
     </Header>
   );
 }

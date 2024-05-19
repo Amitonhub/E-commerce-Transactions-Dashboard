@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  user-select: none;
 }
 
 code {
@@ -15,7 +16,12 @@ code {
   border-bottom: 0 !important;
 }
 .ant-card-body{
+  height: 100% !important;
   padding-left: 24px !important;
   padding-bottom: 10px !important;
   padding-top: 0 !important;
+}
+
+.ant-form-item-control-input{
+  width: max-content;
 }
