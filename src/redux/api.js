@@ -38,7 +38,37 @@ export const api = createApi({
         method: 'GET',
       }),
     }),
+    addProduct: builder.mutation({
+      query: (product) => ({
+        url: '/add-product',
+        method: 'POST',
+        body: product,
+      }),
+      invalidatesTags: [{ type: 'Products', id: 'LIST' }]
+    }),
+    updateProduct: builder.mutation({
+      query: (productId) => ({
+        url: '/update-product',
+        method: 'POST',
+        body: productId,
+      }),
+      invalidatesTags: [{ type: 'Products', id: 'LIST' }]
+    }),
+    getAllProducts: builder.query({
+      query: () => ({
+        url: '/all-products',
+        method: 'GET',
+      }),
+      providesTags: [{ type: 'Products', id: 'LIST' }]
+    }),
+    dashboard: builder.query({
+      query: () => ({
+        url: '/dashboard',
+        method: 'GET',
+      }),
+      providesTags: [{ type: 'Products', id: 'LIST' }]
+    }),
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation, useGetUserDetailsQuery } = api;
+export const { useRegisterMutation, useLoginMutation, useGetUserDetailsQuery, useAddProductMutation, useUpdateProductMutation, useGetAllProductsQuery, useDashboardQuery } = api;

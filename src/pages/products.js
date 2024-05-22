@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { Card, Button, Row, Col, Modal, Input, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-
+import {
+  useAddProductMutation,
+  useGetAllProductsQuery,
+  useUpdateProductMutation,
+} from "../redux/api";
+import dummyProduct from "../assets/dummy-product.png";
+import { toast } from "react-toastify";
 const { Meta } = Card;
 
 const Products = () => {
@@ -10,62 +16,29 @@ const Products = () => {
     name: "",
     price: "",
     image: "",
-  }); // State to store the details of the new product
+  });
+  const { data: products, error, isLoading } = useGetAllProductsQuery();
+  const [addProduct] = useAddProductMutation();
+  const [purchasedProduct] = useUpdateProductMutation();
 
-  const handleAddProduct = () => {
-    // Logic to add the new product to the products array
-    // You can also perform validation before adding the product
-    // For example: Check if all fields are filled before adding the product
-    // Once the product is added, you can close the modal
-    setModal2Open(false);
+  const handleAddProduct = async () => {
+    try {
+      await addProduct(newProduct).unwrap();
+      setModal2Open(false);
+      setNewProduct({ image: "", name: "", price: "" });
+      // handle success, e.g., show a notification
+    } catch (err) {
+      // handle error, e.g., show an error message
+    }
   };
-  const products = [
-    {
-      name: "Product 1",
-      price: "$10",
-      image: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      name: "Product 2",
-      price: "$20",
-      image: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      name: "Product 3",
-      price: "$30",
-      image: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      name: "Product 4",
-      price: "$40",
-      image: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      name: "Product 5",
-      price: "$50",
-      image: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      name: "Product 5",
-      price: "$50",
-      image: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      name: "Product 5",
-      price: "$50",
-      image: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      name: "Product 5",
-      price: "$50",
-      image: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-    {
-      name: "Product 5",
-      price: "$50",
-      image: "https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-    },
-  ];
+
+  const purchaseProduct = (productId) => {
+    purchasedProduct({productId: productId});
+    toast.success("Product purchased...but stripe Integration is pending!!!");
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading products</div>;
 
   return (
     <div style={{ padding: "20px" }}>
@@ -132,7 +105,9 @@ const Products = () => {
             <Card
               hoverable
               style={{ width: 200 }}
-              cover={<img alt={product.name} src={product.image} />}
+              cover={
+                <img alt={product.name} src={product?.image || dummyProduct} />
+              }
             >
               <Card.Meta
                 style={{ margin: 0, marginTop: 10 }}
@@ -142,8 +117,9 @@ const Products = () => {
               <Button
                 type="primary"
                 style={{ backgroundColor: "#8251FE", marginTop: "10px" }}
+                onClick={() => purchaseProduct(product._id)} // Update the onClick handler
               >
-                View Details
+                Buy now
               </Button>
             </Card>
           </Col>

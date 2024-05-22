@@ -3,7 +3,9 @@ import { Card } from 'antd';
 import Barchart from '../charts/barchart';
 import Saleschart from '../charts/salesChart';
 const { Meta } = Card;
-const DashboardLowerCards = () => (
+const DashboardLowerCards = (data) => {
+  const {data: salesData} = data
+  return (
     <div style={{display : 'flex', gap : 20, height: '100%'}}>
   <Card
     title="Platform sales"
@@ -12,7 +14,7 @@ const DashboardLowerCards = () => (
       height: '44vh'
     }}
   >
-    <Saleschart />
+    <Saleschart salesData={salesData && salesData.salesData}/>
   </Card>
   <Card
     title="Top products"
@@ -21,18 +23,18 @@ const DashboardLowerCards = () => (
         height: '44vh'
     }}
   >
-    <Barchart />
+    <Barchart salesData={salesData && salesData.salesData}/>
   </Card>
   <Card
     hoverable
     style={{
-      width: 240,
+      width: '30rem',
       height: '100%'
     }}
-    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+    cover={<img alt="example" src={salesData?.bestProduct?.image} />}
   >
-    <Meta title="Europe Street beat" description="www.instagram.com" />
+    <Meta title={salesData?.bestProduct?.name} description={`sales: ${salesData?.bestProduct?.reOrdered}`} />
   </Card>
   </div>
-);
+)};
 export default DashboardLowerCards;

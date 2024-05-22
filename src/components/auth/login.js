@@ -10,6 +10,7 @@ const Login = () => {
   const [loginUser, { isLoading, isError, isSuccess, data }] = useLoginMutation();
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  
   useEffect(() => {
     if (isSuccess && data) {
       localStorage.setItem('accessToken', data.accessToken);
@@ -24,7 +25,6 @@ const Login = () => {
   const onFinish = async (values) => {
     try {
       await loginUser({email: values.email, password: values.password }).unwrap();
-      console.log('User registered successfully');
     } catch (error) {
       console.error('Error registering user:', error);
     }
