@@ -20,7 +20,7 @@ const Products = () => {
   const { data: products, error, isLoading } = useGetAllProductsQuery();
   const [addProduct] = useAddProductMutation();
   const [purchasedProduct] = useUpdateProductMutation();
-
+  const isMobile = window.innerWidth < 767;
   const handleAddProduct = async () => {
     try {
       await addProduct(newProduct).unwrap();
@@ -41,13 +41,13 @@ const Products = () => {
   if (error) return <div>Error loading products</div>;
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: "20px", display: isMobile && 'flex',flexDirection: isMobile && 'column'  }}>
       <Button
         type="dashed"
         style={{
           backgroundColor: "#8251FE",
           color: "white",
-          float: "right",
+          float: !isMobile && "right",
           marginBottom: "20px",
         }}
         onClick={() => setModal2Open(true)}
@@ -104,7 +104,7 @@ const Products = () => {
           <Col key={index} xs={24} sm={12} md={8} lg={6} xl={4}>
             <Card
               hoverable
-              style={{ width: 200 }}
+              style={{ width: !isMobile && 200 }}
               cover={
                 <img alt={product.name} src={product?.image || dummyProduct} />
               }
