@@ -14,7 +14,7 @@ Advanced Analytics Dashboard for E-commerce Transactions (Multi-Repo)
 **Tech stacks:**
 
 Frontend 
-React Js, Ant design, Recharts, Redux, @reduxjs/toolkit
+React Js, Ant design, Recharts, Redux, @reduxjs/toolkit, Cloudinary
 
 Backend 
 Node js, Express Js, TensorFlow.js

@@ -11,7 +11,7 @@ const { Header } = Layout;
 const items = [
   { key: 1, label: 'Dashboard', route: '/dashboard' },
   { key: 2, label: 'Products', route: '/products' },
-  { key: 3, label: 'Customers', route: '/customers' },
+  // { key: 3, label: 'Customers', route: '/customers' },
   { key: 8, label: 'Logout', route: '/logout' }
 ];
 
